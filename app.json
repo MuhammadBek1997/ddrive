@@ -1,25 +1,44 @@
 {
   "expo": {
-    "name": "passenger",
-    "slug": "passenger",
+    "name": "Zoomer",
+    "slug": "zoomer-passenger",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "uz.zoomer.passenger",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Zoomer siz uchun eng yaqin haydovchini topish uchun joylashuvingizga muhtoj.",
+        "NSLocationAlwaysUsageDescription": "Zoomer sayohat davomida joylashuvingizni kuzatish uchun muhtoj."
+      }
     },
     "android": {
+      "package": "uz.zoomer.passenger",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FACC15",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ]
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "plugins": [
+      ["expo-location", {
+        "locationAlwaysAndWhenInUsePermission": "Zoomer siz uchun eng yaqin haydovchini topish uchun joylashuvingizga muhtoj."
+      }],
+      "expo-notifications"
+    ],
+    "extra": {
+      "yandexApiKey": "78def305-d849-4788-8262-e05dfc98d466",
+      "apiUrl": "http://localhost:8080/api"
     }
   }
 }
