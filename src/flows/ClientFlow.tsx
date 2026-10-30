@@ -18,6 +18,9 @@ const CATEGORIES = [
   { id: 'home', title: "Uy-ro'zg'or", screen: 'Category', params: { kind: 'household' } },
   { id: 'electronics', title: 'Elektronika', screen: 'Category', params: { kind: 'electronics' } },
   { id: 'flowers', title: 'Gullar', screen: 'Category', params: { kind: 'flowers' } },
+  { id: 'peregon', title: 'Peregon', screen: 'Peregon' },
+  { id: 'intercity', title: 'Shaharlararo', screen: 'Intercity' },
+  { id: 'partners', title: 'Hamkorlar', screen: 'PartnerServices' },
 ]
 
 const RESTAURANTS = [
@@ -38,7 +41,17 @@ export function HomeScreen() {
   const user = useAuthStore((s) => s.user)
   const lang = usePrefs((s) => s.lang)
   const { colors } = useTheme()
-  const name = user?.name || 'Aziz Aliyev'
+  const name = user?.name || 'Eldor Komilov'
+  const services = [
+    { title: 'Taksi', go: 'Destination' },
+    { title: 'Shaharlararo', go: 'Intercity', badge: 'Yangi' },
+    { title: 'Peregon', go: 'Peregon', badge: 'Yangi' },
+    { title: 'Kuryer', go: 'CourierSend' },
+    { title: 'Hamkorlar', go: 'PartnerServices' },
+    { title: 'Market', go: 'Category', params: { kind: 'grocery' } },
+    { title: 'Restoran', go: 'Restaurants' },
+    { title: 'Dorixona', go: 'Category', params: { kind: 'pharmacy' } },
+  ]
   return (
     <Screen pad={false} scroll>
       <View style={{ padding: 16, gap: 14 }}>
@@ -47,42 +60,35 @@ export function HomeScreen() {
             <Text style={{ color: colors.secondary }}>Xayrli kun,</Text>
             <Text style={{ color: colors.text, fontSize: 24, fontWeight: '700' }}>{name}</Text>
           </View>
-          <View style={{ backgroundColor: colors.accentSoft, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 }}>
+          <Pressable onPress={() => navigation.navigate('Notifications')} style={{ backgroundColor: colors.accentSoft, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 }}>
             <Text style={{ color: colors.accent, fontWeight: '700', fontSize: 12 }}>{lang}</Text>
-          </View>
+          </Pressable>
         </View>
 
-        <Card onPress={() => navigation.navigate('Destination')}>
-          <Text style={{ color: colors.secondary, fontSize: 12 }}>Yetkazish manzili</Text>
-          <Text style={{ color: colors.text, fontWeight: '600', marginTop: 2 }}>Mustaqillik ko'chasi, 15 · Uy</Text>
-        </Card>
-
-        <Pressable onPress={() => navigation.navigate('Qidiruv')} style={{ backgroundColor: colors.surface, borderRadius: 14, borderWidth: 1, borderColor: colors.border, minHeight: 48, justifyContent: 'center', paddingHorizontal: 14 }}>
-          <Text style={{ color: colors.secondary }}>Nima qidiryapsiz?</Text>
+        <Pressable onPress={() => navigation.navigate('Search')} style={{ backgroundColor: colors.surface, borderRadius: 14, borderWidth: 1, borderColor: colors.border, minHeight: 48, justifyContent: 'center', paddingHorizontal: 14 }}>
+          <Text style={{ color: colors.secondary }}>Xizmat yoki manzil qidiring</Text>
         </Pressable>
 
-        <View style={{ flexDirection: 'row', gap: 10 }}>
-          <Pressable onPress={() => navigation.navigate('Destination')} style={{ flex: 1, backgroundColor: colors.accent, borderRadius: 18, padding: 14, minHeight: 108 }}>
-            <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>Taksi</Text>
-            <Text style={{ color: '#DBEAFE', marginTop: 6 }}>2 daqiqada yetib keladi</Text>
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate('CourierSend')} style={{ flex: 1, backgroundColor: '#172554', borderRadius: 18, padding: 14, minHeight: 108 }}>
-            <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>Kuryer</Text>
-            <Text style={{ color: '#C7D2FE', marginTop: 6 }}>Posilka va hujjat</Text>
-          </Pressable>
-        </View>
+        <Pressable onPress={() => navigation.navigate('Peregon')} style={{ backgroundColor: '#172554', borderRadius: 18, padding: 16 }}>
+          <Text style={{ color: '#93C5FD', fontWeight: '700', fontSize: 12 }}>Yangi</Text>
+          <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700', marginTop: 6 }}>Peregon — mashinangizni haydovchi olib borib beradi</Text>
+        </Pressable>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
-          {CATEGORIES.map((item) => (
-            <Pressable key={item.id} onPress={() => navigation.navigate(item.screen, item.params)} style={{ backgroundColor: colors.surface, borderRadius: 14, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 12, paddingVertical: 10 }}>
-              <Text style={{ color: colors.text, fontWeight: '600' }}>{item.title}</Text>
-              {item.badge ? <Text style={{ color: colors.error, fontSize: 12, fontWeight: '700' }}>{item.badge}</Text> : null}
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+          {services.map((item) => (
+            <Pressable key={item.title} onPress={() => navigation.navigate(item.go, item.params)} style={{ width: '47%', backgroundColor: colors.surface, borderRadius: 14, borderWidth: 1, borderColor: colors.border, padding: 12 }}>
+              <Text style={{ color: colors.text, fontWeight: '700' }}>{item.title}</Text>
+              {item.badge ? <Text style={{ color: colors.accent, fontSize: 12, fontWeight: '700' }}>{item.badge}</Text> : null}
             </Pressable>
           ))}
-          <Pressable onPress={() => navigation.navigate('Services')} style={{ backgroundColor: colors.accentSoft, borderRadius: 14, paddingHorizontal: 12, paddingVertical: 10, justifyContent: 'center' }}>
-            <Text style={{ color: colors.accent, fontWeight: '700' }}>Barchasi</Text>
-          </Pressable>
-        </ScrollView>
+        </View>
+
+        <Card onPress={() => navigation.navigate('Intercity')}>
+          <Text style={{ color: colors.text, fontWeight: '700' }}>Toshkentga bugun 12 ta reys</Text>
+          <Text style={{ color: colors.secondary }}>Haydovchilar narxi 30 000 so'mdan</Text>
+        </Card>
+
+        <Pressable onPress={() => navigation.navigate('Services')}><Text style={{ color: colors.accent, fontWeight: '700' }}>Barcha xizmatlar</Text></Pressable>
 
         <Card onPress={() => navigation.navigate('DriverFound')}>
           <Text style={{ color: colors.success, fontWeight: '700' }}>Haydovchi 3 daqiqada keladi</Text>
@@ -109,7 +115,7 @@ export function HomeScreen() {
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ color: colors.text, fontSize: 17, fontWeight: '700' }}>Yaqinda buyurtma qilingan</Text>
-          <Pressable onPress={() => navigation.navigate('Buyurtmalar')}><Text style={{ color: colors.accent, fontWeight: '600' }}>Barchasi</Text></Pressable>
+          <Pressable onPress={() => navigation.navigate('Tabs', { screen: 'Tarix' })}><Text style={{ color: colors.accent, fontWeight: '600' }}>Barchasi</Text></Pressable>
         </View>
         <Card onPress={() => navigation.navigate('Tracking')}>
           <Text style={{ color: colors.text, fontWeight: '600' }}>Go'shtli somsa × 4</Text>
@@ -151,6 +157,7 @@ export function SearchScreen() {
             </Pressable>
           ))}
         </ScrollView>
+        {items.length === 0 ? <Card onPress={() => navigation.navigate('NothingFound')}><Text style={{ color: colors.text, fontWeight: '700' }}>Hech narsa topilmadi</Text></Card> : null}
         {items.map((item) => (
           <Card key={item.title} onPress={() => navigation.navigate(item.go, item.params)}>
             <Text style={{ color: colors.accent, fontSize: 12, fontWeight: '700' }}>{item.tag}</Text>
@@ -172,22 +179,40 @@ export function SearchScreen() {
 export function ServicesScreen() {
   const navigation = useNav()
   const { colors } = useTheme()
-  const all: { title: string; text: string; go: string; params?: { kind: string } }[] = [
-    { title: 'Taksi', text: '2 daqiqada yetib keladi', go: 'Destination' },
-    { title: 'Kuryer', text: 'Posilka va hujjat', go: 'CourierSend' },
-    ...CATEGORIES.map((item) => ({ title: item.title, text: item.badge || 'Ochish', go: item.screen, params: item.params })),
+  const groups: { title: string; items: { title: string; text: string; go: string; params?: { kind: string } }[] }[] = [
+    { title: 'Transport', items: [
+      { title: 'Taksi', text: 'Shaharingizda 2 daqiqada', go: 'Destination' },
+      { title: 'Shaharlararo', text: "O'z narxingizni taklif qiling", go: 'Intercity' },
+      { title: 'Peregon', text: 'Haydovchi mashinangizni olib borib beradi', go: 'Peregon' },
+      { title: 'Yuk tashish', text: 'Gul, kuma, furs', go: 'CargoBooking' },
+    ] },
+    { title: 'Hamkorlar xizmatlari', items: [
+      { title: 'Avtoservis', text: 'Usta Motors', go: 'PartnerServices' },
+      { title: 'Moyka', text: 'Aqua Moyka', go: 'PartnerServices' },
+      { title: 'Evakuator', text: 'Tez Evakuator', go: 'PartnerServices' },
+      { title: 'Usta', text: 'Elektrik, santexnik', go: 'PartnerServices' },
+    ] },
+    { title: 'Yetkazish va xarid', items: [
+      { title: 'Kuryer', text: 'Posilka va hujjat', go: 'CourierSend' },
+      { title: 'Market', text: "Oziq-ovqat", go: 'Category', params: { kind: 'grocery' } },
+      { title: 'Restoran', text: 'Ovqat', go: 'Restaurants' },
+      { title: 'Dorixona', text: 'Dori', go: 'Category', params: { kind: 'pharmacy' } },
+    ] },
   ]
   return (
     <Screen scroll>
       <Header title="Barcha xizmatlar" onBack={() => navigation.goBack()} />
-      <View style={{ gap: 10, marginTop: 12 }}>
-        {all.map((item) => (
-          <Card key={item.title} onPress={() => navigation.navigate(item.go, item.params)}>
-            <Text style={{ color: colors.text, fontWeight: '700', fontSize: 16 }}>{item.title}</Text>
-            <Text style={{ color: colors.secondary, marginTop: 4 }}>{item.text}</Text>
-          </Card>
-        ))}
-      </View>
+      {groups.map((group) => (
+        <View key={group.title} style={{ gap: 8, marginTop: 16 }}>
+          <Text style={{ color: colors.secondary, fontWeight: '700' }}>{group.title}</Text>
+          {group.items.map((item) => (
+            <Card key={item.title} onPress={() => navigation.navigate(item.go, item.params)}>
+              <Text style={{ color: colors.text, fontWeight: '700' }}>{item.title}</Text>
+              <Text style={{ color: colors.secondary }}>{item.text}</Text>
+            </Card>
+          ))}
+        </View>
+      ))}
     </Screen>
   )
 }
@@ -219,23 +244,19 @@ export function NotificationsScreen() {
 export function OrdersScreen() {
   const navigation = useNav()
   const { colors } = useTheme()
-  const [tab, setTab] = useState('Faol')
-  const tabs = ['Faol (2)', 'Tarix', 'Rejalashtirilgan']
+  const [tab, setTab] = useState('Hammasi')
+  const tabs = ['Hammasi', 'Taksi', 'Yetkazish']
   return (
     <Screen scroll>
-      <Text style={{ color: colors.text, fontSize: 24, fontWeight: '700' }}>Buyurtmalar</Text>
+      <Text style={{ color: colors.text, fontSize: 24, fontWeight: '700' }}>Tarix</Text>
       <View style={{ flexDirection: 'row', gap: 8, marginVertical: 12 }}>
-        {tabs.map((item) => {
-          const active = tab === item.split(' ')[0] || (item.startsWith('Faol') && tab === 'Faol')
-          const key = item.startsWith('Faol') ? 'Faol' : item
-          return (
-            <Pressable key={item} onPress={() => setTab(key)} style={{ backgroundColor: tab === key ? colors.accent : colors.surface, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderColor: colors.border }}>
-              <Text style={{ color: tab === key ? '#fff' : colors.text, fontWeight: '600' }}>{item}</Text>
-            </Pressable>
-          )
-        })}
+        {tabs.map((item) => (
+          <Pressable key={item} onPress={() => setTab(item)} style={{ backgroundColor: tab === item ? colors.accent : colors.surface, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderColor: colors.border }}>
+            <Text style={{ color: tab === item ? '#fff' : colors.text, fontWeight: '600' }}>{item}</Text>
+          </Pressable>
+        ))}
       </View>
-      {tab === 'Faol' ? (
+      {tab !== 'Tarix' ? (
         <View style={{ gap: 10 }}>
           <Card onPress={() => navigation.navigate('Tracking')}>
             <Text style={{ color: colors.text, fontWeight: '700' }}>Rayhon milliy taomlari</Text>
@@ -248,14 +269,13 @@ export function OrdersScreen() {
           </Card>
         </View>
       ) : null}
-      {tab === 'Tarix' ? (
+      {tab !== 'Yetkazish' ? (
         <View style={{ gap: 10 }}>
           <HistoryRow title="Dorixona №1" meta="Kecha · 2 ta mahsulot" price="28 500 so'm" status="Yetkazildi" />
           <HistoryRow title="Yuk · Divan" meta="12-sentabr · Isuzu NPR" price="240 000 so'm" status="Bajarildi" />
           <HistoryRow title="Burger Lab" meta="10-sentabr" price="42 000 so'm" status="Bekor qilindi" />
         </View>
       ) : null}
-      {tab === 'Rejalashtirilgan' ? <Text style={{ color: colors.secondary }}>Rejalashtirilgan buyurtma yo'q. Sana tanlash oynasi dizaynda alohida kadr emas.</Text> : null}
     </Screen>
   )
 }
@@ -303,6 +323,7 @@ export function SettingsScreen() {
       <Card><Text style={{ color: colors.text }}>Favqulodda kontaktlar</Text><Text style={{ color: colors.secondary }}>2 ta kontakt</Text></Card>
       <SettingSwitch title="Safarni avtomatik ulashish" text="Tungi safarlarda" value={share} onValueChange={setShare} />
       <Text style={{ color: colors.secondary, marginTop: 16, fontWeight: '700' }}>XABARNOMALAR</Text>
+      <Card onPress={() => navigation.navigate('NotifyPermission')}><Text style={{ color: colors.text, fontWeight: '600' }}>Bildirishnoma ruxsati</Text></Card>
       <SettingSwitch title="Push xabarlar" text="Buyurtma holati" value={push} onValueChange={setPush} />
       <SettingSwitch title="Aksiyalar" text="SMS va push" value={promo} onValueChange={setPromo} />
     </Screen>
@@ -328,15 +349,16 @@ export function ProfileScreen() {
   const user = useAuthStore((s) => s.user)
   const { colors } = useTheme()
   const rows = [
-    { title: 'Buyurtmalar', go: 'Buyurtmalar' },
+    { title: 'Til', go: 'Settings' },
+    { title: 'Saqlangan joylar', go: 'Destination' },
+    { title: "To'lovlar", go: 'Settings' },
+    { title: "Haydovchi bo'lish", go: 'Settings' },
     { title: 'Bildirishnomalar', go: 'Notifications' },
-    { title: 'Sozlamalar', go: 'Settings' },
-    { title: 'Yetkazish manzili', go: 'Destination' },
   ]
   return (
     <Screen scroll footer={<Button title="Chiqish" variant="danger" onPress={logout} />}>
       <Text style={{ color: colors.secondary }}>Xayrli kun,</Text>
-      <Text style={{ color: colors.text, fontSize: 24, fontWeight: '700' }}>{user?.name || 'Aziz Aliyev'}</Text>
+      <Text style={{ color: colors.text, fontSize: 24, fontWeight: '700' }}>{user?.name || 'Eldor Komilov'}</Text>
       <Text style={{ color: colors.secondary, marginBottom: 12 }}>{user?.phone}</Text>
       <Card>
         <Text style={{ color: colors.secondary, fontSize: 12 }}>Yetkazish manzili</Text>
@@ -379,7 +401,12 @@ export function CourierSendScreen() {
   const { colors } = useTheme()
   if (sent) {
     return (
-      <Screen footer={<Button title="Buyurtmalarga" onPress={() => navigation.navigate('Buyurtmalar')} />}>
+      <Screen footer={
+        <View style={{ gap: 8 }}>
+          <Button title="Topshirish kodi" onPress={() => navigation.navigate('HandoverCode')} />
+          <Button title="Kuzatish" variant="secondary" onPress={() => navigation.navigate('DeliveryTrack')} />
+        </View>
+      }>
         <View style={{ flex: 1, justifyContent: 'center', gap: 8 }}>
           <Text style={{ color: colors.text, fontSize: 28, fontWeight: '700' }}>Kuryer chiqdi</Text>
           <Text style={{ color: colors.secondary }}>Mustaqillik ko'chasi, 15 dan Toshkent City Mall ga.</Text>
@@ -388,7 +415,12 @@ export function CourierSendScreen() {
     )
   }
   return (
-    <Screen scroll footer={<Button title="Kuryer chaqirish" onPress={() => setSent(true)} />}>
+    <Screen scroll footer={
+      <View style={{ gap: 8 }}>
+        <Button title="Kuryer chaqirish" onPress={() => setSent(true)} />
+        <Button title="Kuryer topilmadi" variant="ghost" onPress={() => navigation.navigate('CourierMissing')} />
+      </View>
+    }>
       <Header title="Kuryer" onBack={() => navigation.goBack()} />
       <Text style={{ color: colors.secondary, marginVertical: 8 }}>Posilka va hujjat. Qayerdan va qayerga.</Text>
       <View style={{ gap: 12 }}>

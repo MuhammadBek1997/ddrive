@@ -1,15 +1,15 @@
 import { Pressable, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeScreen, MapTabScreen, OrdersScreen, ProfileScreen, SearchScreen } from '../flows/ClientFlow'
+import { HomeScreen, OrdersScreen, ProfileScreen } from '../flows/ClientFlow'
+import { DeliveryHomeScreen } from '../flows/GapsFlow'
 import { useTheme } from '../ui/theme'
 
 const Tab = createBottomTabNavigator()
 
 const TABS = [
-  { name: 'Asosiy', label: 'Asosiy', icon: '⌂', component: HomeScreen },
-  { name: 'Qidiruv', label: 'Qidiruv', icon: '⌕', component: SearchScreen },
-  { name: 'Buyurtmalar', label: 'Buyurtmalar', icon: '☰', component: OrdersScreen },
-  { name: 'Xarita', label: 'Xarita', icon: '⌖', component: MapTabScreen },
+  { name: 'Taksi', label: 'Taksi', icon: '⌂', component: HomeScreen },
+  { name: 'Yetkazish', label: 'Yetkazish', icon: '▣', component: DeliveryHomeScreen },
+  { name: 'Tarix', label: 'Tarix', icon: '☰', component: OrdersScreen },
   { name: 'Profil', label: 'Profil', icon: '☺', component: ProfileScreen },
 ]
 

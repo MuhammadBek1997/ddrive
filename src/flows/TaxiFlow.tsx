@@ -44,8 +44,14 @@ export function DestinationScreen() {
           </Pressable>
         ))}
       </View>
-      <Pressable onPress={() => navigation.navigate('Tariffs', { to: picked, fromMap: true })} style={{ marginTop: 14 }}>
-        <Text style={{ color: colors.accent, fontWeight: '700' }}>Xaritadan tanlash</Text>
+      <Pressable onPress={() => navigation.navigate('PinLandmark')} style={{ marginTop: 14 }}>
+        <Text style={{ color: colors.accent, fontWeight: '700' }}>Xaritadan pin va mo'ljal</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('OutOfArea')} style={{ marginTop: 8 }}>
+        <Text style={{ color: colors.error, fontWeight: '700' }}>Hududdan tashqari</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('LocationPermission')} style={{ marginTop: 8 }}>
+        <Text style={{ color: colors.secondary, fontWeight: '700' }}>Joylashuv ruxsati yo'q</Text>
       </Pressable>
     </Screen>
   )
@@ -111,6 +117,9 @@ export function SearchingScreen() {
             <Pressable onPress={() => navigation.replace('DriverFound')} style={{ marginTop: 10 }}>
               <Text style={{ color: colors.accent, fontWeight: '700' }}>Topilganini ko'rish</Text>
             </Pressable>
+            <Pressable onPress={() => navigation.replace('TaxiTimeout')} style={{ marginTop: 8 }}>
+              <Text style={{ color: colors.error, fontWeight: '700' }}>Haydovchi topilmadi</Text>
+            </Pressable>
           </Card>
         </View>
       </CityMap>
@@ -129,6 +138,9 @@ export function DriverFoundScreen() {
         <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700' }}>Sherzod · 4.92 ★</Text>
         <Text style={{ color: colors.secondary }}>Chevrolet Cobalt · 01 A 777 BA</Text>
         <Text style={{ color: colors.text, marginTop: 8 }}>Komfort · 19 000 so'm</Text>
+        <Pressable onPress={() => navigation.navigate('FreeWait')}><Text style={{ color: colors.accent, fontWeight: '700' }}>Bepul kutish</Text></Pressable>
+        <Pressable onPress={() => navigation.navigate('CancelRide')}><Text style={{ color: colors.error, fontWeight: '700' }}>Bekor qilish</Text></Pressable>
+        <Pressable onPress={() => navigation.navigate('Chat')}><Text style={{ color: colors.accent, fontWeight: '700' }}>Chat</Text></Pressable>
       </View>
     </Screen>
   )
@@ -140,9 +152,9 @@ export function LiveRideScreen() {
   return (
     <Screen map pad={false} footer={<Button title="Baho berish" onPress={() => navigation.navigate('Rating')} />}>
       <CityMap>
-        <View style={{ position: 'absolute', top: 16, right: 16, backgroundColor: colors.error, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 8 }}>
+        <Pressable onPress={() => navigation.navigate('Sos')} style={{ position: 'absolute', top: 16, right: 16, backgroundColor: colors.error, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 8 }}>
           <Text style={{ color: '#fff', fontWeight: '700' }}>SOS</Text>
-        </View>
+        </Pressable>
       </CityMap>
       <View style={{ backgroundColor: colors.surface, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 16, gap: 6 }}>
         <Text style={{ color: colors.text, fontSize: 20, fontWeight: '700' }}>Manzilga 9 daqiqa</Text>
@@ -150,6 +162,9 @@ export function LiveRideScreen() {
         <Text style={{ color: colors.secondary }}>Safar jarayoni · 62%</Text>
         <Text style={{ color: colors.text }}>Mustaqillik ko'chasi, 15 → Toshkent City Mall</Text>
         <Text style={{ color: colors.text, fontWeight: '600' }}>Sherzod · 4.92 ★ · Chevrolet Cobalt · 01 777 BA</Text>
+        <Pressable onPress={() => navigation.navigate('PriceChanged')}><Text style={{ color: colors.warning, fontWeight: '700' }}>Narx o'zgardi</Text></Pressable>
+        <Pressable onPress={() => navigation.navigate('RideOffline')}><Text style={{ color: colors.secondary, fontWeight: '700' }}>Aloqa yo'q</Text></Pressable>
+        <Pressable onPress={() => navigation.navigate('DriverCancelled')}><Text style={{ color: colors.error, fontWeight: '700' }}>Haydovchi bekor qildi</Text></Pressable>
       </View>
     </Screen>
   )
@@ -160,10 +175,11 @@ export function RatingScreen() {
   const [stars, setStars] = useState(5)
   const { colors } = useTheme()
   return (
-    <Screen footer={<Button title="Yuborish" onPress={() => navigation.navigate('Tabs', { screen: 'Buyurtmalar' })} />}>
+    <Screen footer={<Button title="Yuborish" onPress={() => navigation.navigate('Tabs', { screen: 'Tarix' })} />}>
       <Header title="Safar yakunlandi" onBack={() => navigation.goBack()} />
-      <Text style={{ color: colors.text, fontSize: 22, fontWeight: '700', marginTop: 12 }}>Sherzodni baholang</Text>
-      <Text style={{ color: colors.secondary, marginBottom: 12 }}>Komfort · 19 000 so'm · naqd</Text>
+      <Text style={{ color: colors.text, fontSize: 22, fontWeight: '700', marginTop: 12 }}>Haydovchini baholang</Text>
+      <Text style={{ color: colors.secondary, marginBottom: 12 }}>19 000 so'm · naqd · 4.2 km · 14 daq. Choycha yo'q.</Text>
+      <Text style={{ color: colors.secondary, marginBottom: 8 }}>Toza mashina · Xushmuomala · Ehtiyotkor</Text>
       <View style={{ flexDirection: 'row', gap: 8 }}>
         {[1, 2, 3, 4, 5].map((n) => (
           <Pressable key={n} onPress={() => setStars(n)}>

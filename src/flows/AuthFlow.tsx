@@ -17,7 +17,8 @@ export function WelcomeScreen() {
   return (
     <Screen footer={
       <View style={{ gap: 10 }}>
-        <Button title="Kirish" onPress={() => navigation.navigate('Login')} />
+        <Button title="SMS bilan kirish" onPress={() => navigation.navigate('PhoneOtp')} />
+        <Button title="Parol bilan kirish" variant="secondary" onPress={() => navigation.navigate('Login')} />
         <Button title="Ro'yxatdan o'tish" variant="dark" onPress={() => navigation.navigate('RegisterName')} />
         <Button title="Hamkorimiz bo'ling" variant="ghost" onPress={() => navigation.navigate('BecomePartner')} />
       </View>

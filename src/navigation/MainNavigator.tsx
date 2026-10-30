@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabNavigator from './TabNavigator'
-import { CourierSendScreen, NotificationsScreen, ServicesScreen, SettingsScreen } from '../flows/ClientFlow'
+import { CourierSendScreen, NotificationsScreen, SearchScreen, ServicesScreen, SettingsScreen } from '../flows/ClientFlow'
 import { CargoBookingScreen, CargoConfirmedScreen, CargoOffersScreen, CargoTrackingScreen } from '../flows/CargoFlow'
 import {
   CartScreen,
@@ -23,6 +23,29 @@ import {
   SearchingScreen,
   TariffsScreen,
 } from '../flows/TaxiFlow'
+import {
+  CancelRideScreen,
+  ChatScreen,
+  CourierMissingScreen,
+  DeliveryTrackScreen,
+  DriverCancelledScreen,
+  FreeWaitScreen,
+  HandoverCodeScreen,
+  IntercityOffersScreen,
+  IntercityScreen,
+  LocationPermissionScreen,
+  NothingFoundScreen,
+  NotifyPermissionScreen,
+  OutOfAreaScreen,
+  PartnerServicesScreen,
+  PeregonScreen,
+  PeregonStatusScreen,
+  PinLandmarkScreen,
+  PriceChangedScreen,
+  RideOfflineScreen,
+  SosScreen,
+  TaxiTimeoutScreen,
+} from '../flows/GapsFlow'
 
 const Stack = createNativeStackNavigator()
 
@@ -55,6 +78,28 @@ export default function MainNavigator() {
       <Stack.Screen name="CargoOffers" component={CargoOffersScreen} />
       <Stack.Screen name="CargoConfirmed" component={CargoConfirmedScreen} />
       <Stack.Screen name="CargoTracking" component={CargoTrackingScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="NotifyPermission" component={NotifyPermissionScreen} />
+      <Stack.Screen name="TaxiTimeout" component={TaxiTimeoutScreen} />
+      <Stack.Screen name="OutOfArea" component={OutOfAreaScreen} />
+      <Stack.Screen name="CancelRide" component={CancelRideScreen} />
+      <Stack.Screen name="DriverCancelled" component={DriverCancelledScreen} />
+      <Stack.Screen name="RideOffline" component={RideOfflineScreen} />
+      <Stack.Screen name="LocationPermission" component={LocationPermissionScreen} />
+      <Stack.Screen name="PinLandmark" component={PinLandmarkScreen} />
+      <Stack.Screen name="PriceChanged" component={PriceChangedScreen} />
+      <Stack.Screen name="Chat" component={ChatScreen} />
+      <Stack.Screen name="Sos" component={SosScreen} />
+      <Stack.Screen name="FreeWait" component={FreeWaitScreen} />
+      <Stack.Screen name="NothingFound" component={NothingFoundScreen} />
+      <Stack.Screen name="HandoverCode" component={HandoverCodeScreen} />
+      <Stack.Screen name="DeliveryTrack" component={DeliveryTrackScreen} />
+      <Stack.Screen name="CourierMissing" component={CourierMissingScreen} />
+      <Stack.Screen name="Peregon" component={PeregonScreen} />
+      <Stack.Screen name="PeregonStatus" component={PeregonStatusScreen} />
+      <Stack.Screen name="Intercity" component={IntercityScreen} />
+      <Stack.Screen name="IntercityOffers" component={IntercityOffersScreen} />
+      <Stack.Screen name="PartnerServices" component={PartnerServicesScreen} />
     </Stack.Navigator>
   )
 }
